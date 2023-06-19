@@ -1,0 +1,128 @@
+---
+title: "tutorial-RCT"
+output: 
+  html_document:
+    toc: true
+    # number_sections: true  ## if you want number sections at each table header
+    theme: united  # many options for theme 
+    highlight: tango # specifies the syntax highlighting style
+date: "2023-06-19"
+---
+
+# Conceptual Overview
+
+## Step 1: Design and Randomization
+Design your study by defining the research question, selecting the treatment and control groups, and determining the sample size. Randomization is a crucial step to ensure unbiased assignment of participants to the treatment and control groups.
+
+## Step 2: Data Collection
+Collect the necessary data for your study, including outcome measurements and any relevant covariates or pre-treatment variables. Ensure that the data collection process is standardized and follows the study protocol.
+
+## Step 3: Descriptive Statistics
+Start by calculating descriptive statistics for your outcome variable and covariates separately for the treatment and control groups. This provides an initial overview of the data and helps identify any differences between the groups at baseline.
+
+## Step 4: Assess Balance
+Evaluate the balance between the treatment and control groups to ensure that randomization was successful. Check if there are significant differences in covariates or pre-treatment variables between the groups using statistical tests or visual inspections, such as balance tables or plots.
+
+## Step 5: Treatment Effect Analysis
+Analyze the treatment effect by comparing the outcomes between the treatment and control groups. There are various statistical methods you can employ, such as:
+
++ T-Test: If you have a continuous outcome variable, you can use a t-test to compare the means between the treatment and control groups.
++ Chi-Square Test: For categorical outcome variables, a chi-square test can be used to examine the differences in proportions between the groups.
++ Regression Models: You can use regression models, such as linear regression for continuous outcomes or logistic regression for binary outcomes, to estimate the treatment effect while adjusting for covariates.
+
+## Step 6: Interpretation
+Interpret the results of the treatment effect analysis. Assess the statistical significance of the treatment effect and examine the effect size and its confidence interval. Consider the clinical or practical implications of the findings and relate them back to your research question.
+
+## Step 7: Sensitivity Analysis
+Perform a sensitivity analysis to assess the robustness of the treatment effect estimate to potential sources of bias or confounding. This analysis can involve exploring the impact of unobserved confounders or variations in the assumptions made during the analysis.
+
+## Step 8: Reporting
+Summarize your findings in a clear and concise manner. Prepare a research report or manuscript that includes details of the study design, methods, results, and conclusions. Ensure transparency by providing all relevant information to facilitate replication and validation of the study.
+
+Remember, this is a high-level overview of the steps involved in conducting an RCT analysis. The specific techniques and methods used may vary depending on the nature of the study and the statistical tools available.
+
+
+# Practical Implementation with 'randomizr'
+
+Suppose we want to assess the effectiveness of a new teaching method on student performance. We randomly assign students to either the treatment group, which receives the new teaching method, or the control group, which receives the traditional teaching method. We will then compare the mean scores between the two groups.
+
+## Step 1: Install and Load the Package
+
+```{r}
+
+# install.packages("randomizr")
+library(randomizr)
+
+```
+
+## Step 2: Generate Random Assignment
+
+```{r}
+set.seed(123)  # Set a seed for reproducibility
+n <- 100  # Total number of students
+prob <- 0.5  # Probability of assignment to treatment group
+
+# Random assignment using complete_ra()
+assignment <- complete_ra(N = n, prob = prob);assignment
+
+```
+
+## Step 3: Simulate Outcome Data
+
+For demonstration purposes, let's simulate the outcome data. Suppose the outcome variable is a continuous score. We'll assume that scores follow a normal distribution with a mean of 70 in the control group and a mean of 75 in the treatment group.
+
+```{r}
+
+# Simulate outcome data
+control_scores <- rnorm(sum(assignment == 0), mean = 70, sd = 5)
+treatment_scores <- rnorm(sum(assignment == 1), mean = 75, sd = 5)
+
+# Combine scores for the two groups
+scores <- c(control_scores, treatment_scores)
+
+```
+
+## Step 4: Descriptive Statistics and Balance Check
+
+```{r}
+
+# Descriptive statistics
+mean_control <- mean(scores[assignment == 0])
+mean_treatment <- mean(scores[assignment == 1])
+
+# Check balance
+covariate <- NULL  # No covariate in this example
+# balance_table( data = scores, treatment  = assignment )
+
+```
+
+## Step 5: Treatment Effect Analysis
+
+```{r}
+# T-test to compare means
+treatment_effect <- t.test(scores[assignment == 1], scores[assignment == 0])
+
+# Extract relevant information
+effect_size <- treatment_effect$estimate
+p_value <- treatment_effect$p.value
+conf_interval <- treatment_effect$conf.int
+
+```
+
+## Step 6: Interpretation
+```{r}
+# Interpretation
+if (p_value < 0.05) {
+  conclusion <- "The new teaching method has a significant effect on student performance."
+} else {
+  conclusion <- "There is no significant difference in student performance between the two teaching methods."
+}
+
+# Print results
+cat("Treatment Effect:", effect_size, "\n")
+cat("p-value:", p_value, "\n")
+cat("Confidence Interval:", conf_interval, "\n")
+cat("Conclusion:", conclusion, "\n")
+```
+
+This example demonstrates a basic RCT analysis using the `randomizr` package. However, keep in mind that the analysis methods and interpretation may vary depending on the specific research question and the characteristics of your data.

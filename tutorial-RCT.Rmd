@@ -4,110 +4,84 @@ output: html_document
 date: "2023-06-17"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+Suppose we want to assess the effectiveness of a new teaching method on student performance. We randomly assign students to either the treatment group, which receives the new teaching method, or the control group, which receives the traditional teaching method. We will then compare the mean scores between the two groups.
+
+Step 1: Install and Load the Package
+```{r}
+
+library(RCT)
+library(randomizr)
+
 ```
 
-## Step 1: Install and load the necessary packages
+ 
+Step 2: Generate Random Assignment
+```{r}
+set.seed(123)  # Set a seed for reproducibility
+n <- 100  # Total number of students
+prob <- 0.5  # Probability of assignment to treatment group
 
-First, make sure you have the required packages installed. You can use the install.packages() function to install the packages, and then load them using the library() function.
+# Random assignment using complete_ra()
+assignment <- complete_ra(N = n, prob = prob);assignment
+
+```
+
+## Step 3: Simulate Outcome Data
+
+For demonstration purposes, let's simulate the outcome data. Suppose the outcome variable is a continuous score. We'll assume that scores follow a normal distribution with a mean of 70 in the control group and a mean of 75 in the treatment group.
 
 ```{r}
 
-# install.packages("randomizeR")  # Install the randomizeR package
-# install.packages("dplyr")  # Install the dplyr package for data manipulation
-# install.packages("ggplot2")  # Install the ggplot2 package for data visualization
+# Simulate outcome data
+control_scores <- rnorm(sum(assignment == 0), mean = 70, sd = 5)
+treatment_scores <- rnorm(sum(assignment == 1), mean = 75, sd = 5)
 
-library(randomizeR)  # Load the randomizeR package
-library(dplyr)  # Load the dplyr package
-library(ggplot2)  # Load the ggplot2 package
-
-```
-
-## Step 2: Design your study
-
-Before conducting a randomized controlled study, carefully plan your study design. Determine the research question, define the treatment groups, and identify the outcome variables you want to measure. Also, consider factors such as sample size, inclusion/exclusion criteria, and potential confounding variables.
-
-Step 3: Randomization
-Randomization is a crucial step to ensure that participants have an equal chance of being assigned to different treatment groups, minimizing bias. In R, you can use the block_ra() function from the randomizeR package to perform randomization with blocking (if applicable).
-
-Here's an example of randomization with two treatment groups:
-
-
-```{r, echo=FALSE}
-
-# Create a vector of treatment assignments
-treatment <- c(rep(0, 50), rep(1, 50))  # Two treatment groups (0 and 1)
-
-# Perform randomization with blocking (e.g., age or gender)
-block_ra(treatment, block_var = c(rep("A", 25), rep("B", 25)))
+# Combine scores for the two groups
+scores <- c(control_scores, treatment_scores)
 
 ```
 
-This function will output a randomized treatment assignment vector.
-
-## Step 2: Design your study
-
-Before conducting a randomized controlled study, carefully plan your study design. Determine the research question, define the treatment groups, and identify the outcome variables you want to measure. Also, consider factors such as sample size, inclusion/exclusion criteria, and potential confounding variables.
-
-## Step 3: Randomization
-Randomization is a crucial step to ensure that participants have an equal chance of being assigned to different treatment groups, minimizing bias. In R, you can use the block_ra() function from the randomizeR package to perform randomization with blocking (if applicable).
-
-Here's an example of randomization with two treatment groups:
-
-
-```{r, echo=FALSE}
-
-# Create a vector of treatment assignments
-treatment <- c(rep(0, 50), rep(1, 50))  # Two treatment groups (0 and 1)
-
-# Perform randomization with blocking (e.g., age or gender)
-block_ra(treatment, block_var = c(rep("A", 25), rep("B", 25)))
-
-```
-
-This function will output a randomized treatment assignment vector.
-
-
-## Step 4: Conduct the study
-Once participants are assigned to treatment groups, you can proceed with data collection and analysis. Collect data on the outcome variables you identified in your study design.
-
-For example, let's say you collected data on a continuous outcome variable called "response" and want to compare the means between the treatment groups. You can use the t.test() function in R to perform a t-test:
+Step 4: Descriptive Statistics and Balance Check
 
 ```{r}
 
-# Create a simulated dataset for demonstration
-set.seed(123)  # Set seed for reproducibility
-response_group0 <- rnorm(50, mean = 10, sd = 2)  # Generate data for group 0
-response_group1 <- rnorm(50, mean = 12, sd = 2)  # Generate data for group 1
+# Descriptive statistics
+mean_control <- mean(scores[assignment == 0])
+mean_treatment <- mean(scores[assignment == 1])
 
-# Perform t-test to compare means
-t.test(response_group0, response_group1)
+# Check balance
+covariate <- NULL  # No covariate in this example
+balance_table( data = scores, treatment  = assignment )
 
 ```
 
-This will provide you with the t-statistic, p-value, and confidence interval for the difference in means between the treatment groups.
-
-## Step 5: Evaluate the results
-Assess the statistical significance of the findings and interpret the results in the context of your research question. You can use various functions in R to perform statistical tests and calculate effect sizes.
-
-For example, to visualize the distribution of the outcome variable by treatment group, you can create a boxplot using the ggplot2 package:
+Step 5: Treatment Effect Analysis
 
 ```{r}
+# T-test to compare means
+treatment_effect <- t.test(scores[assignment == 1], scores[assignment == 0])
 
-# Combine the data into a single data frame
-data <- data.frame(
-  response = c(response_group0, response_group1),
-  treatment = factor(c(rep(0, 50), rep(1, 50)))
-)
-
-# Create a boxplot
-ggplot(data, aes(x = treatment, y = response)) +
-  geom_boxplot() +
-  xlab("Treatment Group") +
-  ylab("Response")
+# Extract relevant information
+effect_size <- treatment_effect$estimate
+p_value <- treatment_effect$p.value
+conf_interval <- treatment_effect$conf.int
 
 ```
 
-This will generate a boxplot comparing the distribution of the outcome variable between the treatment groups.
+Step 6: Interpretation
+```{r}
+# Interpretation
+if (p_value < 0.05) {
+  conclusion <- "The new teaching method has a significant effect on student performance."
+} else {
+  conclusion <- "There is no significant difference in student performance between the two teaching methods."
+}
 
+# Print results
+cat("Treatment Effect:", effect_size, "\n")
+cat("p-value:", p_value, "\n")
+cat("Confidence Interval:", conf_interval, "\n")
+cat("Conclusion:", conclusion, "\n")
+```
+
+This example demonstrates a basic RCT analysis using the `randomizr` package. However, keep in mind that the analysis methods and interpretation may vary depending on the specific research question and the characteristics of your data.
