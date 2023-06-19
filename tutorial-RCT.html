@@ -226,106 +226,6 @@ ul.task-list{list-style: none;}
 
 
 
-<style type="text/css">
-code {
-white-space: pre;
-}
-.sourceCode {
-overflow: visible;
-}
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-color: #aaaaaa;
-}
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
-div.sourceCode
-{ background-color: #f8f8f8; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } 
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.at { color: #204a87; } 
-code span.bn { color: #0000cf; } 
-code span.cf { color: #204a87; font-weight: bold; } 
-code span.ch { color: #4e9a06; } 
-code span.cn { color: #8f5902; } 
-code span.co { color: #8f5902; font-style: italic; } 
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.dt { color: #204a87; } 
-code span.dv { color: #0000cf; } 
-code span.er { color: #a40000; font-weight: bold; } 
-code span.ex { } 
-code span.fl { color: #0000cf; } 
-code span.fu { color: #204a87; font-weight: bold; } 
-code span.im { } 
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.kw { color: #204a87; font-weight: bold; } 
-code span.op { color: #ce5c00; font-weight: bold; } 
-code span.ot { color: #8f5902; } 
-code span.pp { color: #8f5902; font-style: italic; } 
-code span.sc { color: #ce5c00; font-weight: bold; } 
-code span.ss { color: #4e9a06; } 
-code span.st { color: #4e9a06; } 
-code span.va { color: #000000; } 
-code span.vs { color: #4e9a06; } 
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } 
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    var j = 0;
-    while (j < rules.length) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
-        j++;
-        continue;
-      }
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') {
-        j++;
-        continue;
-      }
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
 
 
 
@@ -452,20 +352,7 @@ Analysis</a></li>
 Reporting</a></li>
 </ul></li>
 <li><a href="#practical-implementation-with-randomizr" id="toc-practical-implementation-with-randomizr">Practical
-Implementation with ‘randomizr’</a>
-<ul>
-<li><a href="#step-1-install-and-load-the-package" id="toc-step-1-install-and-load-the-package">Step 1: Install and Load
-the Package</a></li>
-<li><a href="#step-2-generate-random-assignment" id="toc-step-2-generate-random-assignment">Step 2: Generate Random
-Assignment</a></li>
-<li><a href="#step-3-simulate-outcome-data" id="toc-step-3-simulate-outcome-data">Step 3: Simulate Outcome
-Data</a></li>
-<li><a href="#step-4-descriptive-statistics-and-balance-check" id="toc-step-4-descriptive-statistics-and-balance-check">Step 4:
-Descriptive Statistics and Balance Check</a></li>
-<li><a href="#step-5-treatment-effect-analysis-1" id="toc-step-5-treatment-effect-analysis-1">Step 5: Treatment Effect
-Analysis</a></li>
-<li><a href="#step-6-interpretation-1" id="toc-step-6-interpretation-1">Step 6: Interpretation</a></li>
-</ul></li>
+Implementation with ‘randomizr’</a></li>
 </ul>
 </div>
 
@@ -477,6 +364,49 @@ Analysis</a></li>
 treatment and control groups, and determining the sample size.
 Randomization is a crucial step to ensure unbiased assignment of
 participants to the treatment and control groups.</p>
+<p>Here are a few common types of RCTs:</p>
+<ul>
+<li><strong>Parallel RCT:</strong> In a parallel RCT, participants are
+randomly assigned to either the treatment or control group, and the two
+groups are followed independently throughout the study. This is the most
+common type of RCT, where the treatment and control groups are compared
+directly.</li>
+<li><strong>Cluster RCT:</strong> In a cluster RCT, randomization occurs
+at the group or cluster level rather than at the individual level.
+Clusters, such as schools, communities, or healthcare facilities, are
+randomly assigned to receive the treatment or control condition. This
+design is useful when it is not feasible or practical to randomize
+individual participants.</li>
+<li><strong>Crossover RCT:</strong> In a crossover RCT, participants
+receive both the treatment and control conditions at different time
+points. The same group of participants serves as their control and
+treatment groups, with the order of the interventions randomized. This
+design is commonly used when the treatment effects are expected to be
+reversible.</li>
+<li><strong>Factorial RCT:</strong> In a factorial RCT, multiple
+interventions or treatments are tested simultaneously in different
+combinations. Participants are randomly assigned to receive one of the
+treatments, a combination of treatments, or no treatment. This design
+allows researchers to examine the individual and combined effects of
+multiple interventions.</li>
+<li><strong>Stepped-Wedge RCT:</strong> In a stepped-wedge RCT, all
+participants eventually receive the treatment, but the order of
+treatment rollout is randomized. This design is often used in
+implementation science or when it is considered unethical to withhold
+treatment from any group for the entire duration of the study.</li>
+<li><strong>Adaptive RCT:</strong> In an adaptive RCT, the study design
+is modified or adapted based on accumulating data during the trial. The
+randomization and treatment allocation process may be adjusted to
+allocate more participants to the treatment arm showing better results.
+This design allows for flexibility in optimizing the allocation of
+resources and refining the intervention during the trial.</li>
+</ul>
+<p>These are just a few examples of different types of RCT designs. The
+choice of design depends on the research question, feasibility, ethical
+considerations, and practical constraints of the specific study. Each
+design has its strengths and limitations, and it is important to select
+the most appropriate design to address the research objectives
+effectively.</p>
 </div>
 <div id="step-2-data-collection" class="section level2">
 <h2>Step 2: Data Collection</h2>
@@ -553,79 +483,6 @@ on student performance. We randomly assign students to either the
 treatment group, which receives the new teaching method, or the control
 group, which receives the traditional teaching method. We will then
 compare the mean scores between the two groups.</p>
-<div id="step-1-install-and-load-the-package" class="section level2">
-<h2>Step 1: Install and Load the Package</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># install.packages(&quot;randomizr&quot;)</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(randomizr)</span></code></pre></div>
-</div>
-<div id="step-2-generate-random-assignment" class="section level2">
-<h2>Step 2: Generate Random Assignment</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># Set a seed for reproducibility</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Total number of students</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fl">0.5</span>  <span class="co"># Probability of assignment to treatment group</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># Random assignment using complete_ra()</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>assignment <span class="ot">&lt;-</span> <span class="fu">complete_ra</span>(<span class="at">N =</span> n, <span class="at">prob =</span> prob);assignment</span></code></pre></div>
-<pre><code>##   [1] 1 1 0 1 0 0 0 1 0 1 1 1 0 1 0 0 1 1 0 1 1 1 0 0 1 1 0 0 0 1 1 1 1 1 0 0 0
-##  [38] 0 0 0 0 0 0 1 1 1 1 0 1 1 0 1 0 0 0 0 1 1 0 1 0 0 0 1 0 1 1 1 0 1 1 1 0 1
-##  [75] 0 0 1 1 1 0 0 1 1 1 0 0 0 1 0 0 1 0 1 0 1 0 1 0 1 0</code></pre>
-</div>
-<div id="step-3-simulate-outcome-data" class="section level2">
-<h2>Step 3: Simulate Outcome Data</h2>
-<p>For demonstration purposes, let’s simulate the outcome data. Suppose
-the outcome variable is a continuous score. We’ll assume that scores
-follow a normal distribution with a mean of 70 in the control group and
-a mean of 75 in the treatment group.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Simulate outcome data</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>control_scores <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(assignment <span class="sc">==</span> <span class="dv">0</span>), <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>treatment_scores <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(assignment <span class="sc">==</span> <span class="dv">1</span>), <span class="at">mean =</span> <span class="dv">75</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co"># Combine scores for the two groups</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(control_scores, treatment_scores)</span></code></pre></div>
-</div>
-<div id="step-4-descriptive-statistics-and-balance-check" class="section level2">
-<h2>Step 4: Descriptive Statistics and Balance Check</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Descriptive statistics</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>mean_control <span class="ot">&lt;-</span> <span class="fu">mean</span>(scores[assignment <span class="sc">==</span> <span class="dv">0</span>])</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>mean_treatment <span class="ot">&lt;-</span> <span class="fu">mean</span>(scores[assignment <span class="sc">==</span> <span class="dv">1</span>])</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co"># Check balance</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>covariate <span class="ot">&lt;-</span> <span class="cn">NULL</span>  <span class="co"># No covariate in this example</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># balance_table( data = scores, treatment  = assignment )</span></span></code></pre></div>
-</div>
-<div id="step-5-treatment-effect-analysis-1" class="section level2">
-<h2>Step 5: Treatment Effect Analysis</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># T-test to compare means</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>treatment_effect <span class="ot">&lt;-</span> <span class="fu">t.test</span>(scores[assignment <span class="sc">==</span> <span class="dv">1</span>], scores[assignment <span class="sc">==</span> <span class="dv">0</span>])</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># Extract relevant information</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>effect_size <span class="ot">&lt;-</span> treatment_effect<span class="sc">$</span>estimate</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> treatment_effect<span class="sc">$</span>p.value</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>conf_interval <span class="ot">&lt;-</span> treatment_effect<span class="sc">$</span>conf.int</span></code></pre></div>
-</div>
-<div id="step-6-interpretation-1" class="section level2">
-<h2>Step 6: Interpretation</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Interpretation</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="cf">if</span> (p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>) {</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  conclusion <span class="ot">&lt;-</span> <span class="st">&quot;The new teaching method has a significant effect on student performance.&quot;</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  conclusion <span class="ot">&lt;-</span> <span class="st">&quot;There is no significant difference in student performance between the two teaching methods.&quot;</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>}</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co"># Print results</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Treatment Effect:&quot;</span>, effect_size, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## Treatment Effect: 72.34518 72.35143</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;p-value:&quot;</span>, p_value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## p-value: 0.995466</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Confidence Interval:&quot;</span>, conf_interval, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## Confidence Interval: -2.183907 2.171409</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Conclusion:&quot;</span>, conclusion, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
-<pre><code>## Conclusion: There is no significant difference in student performance between the two teaching methods.</code></pre>
-<p>This example demonstrates a basic RCT analysis using the
-<code>randomizr</code> package. However, keep in mind that the analysis
-methods and interpretation may vary depending on the specific research
-question and the characteristics of your data.</p>
-</div>
 </div>
 
 
